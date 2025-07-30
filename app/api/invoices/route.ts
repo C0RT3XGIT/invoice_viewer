@@ -2,8 +2,9 @@ import { NextResponse } from 'next/server'
 import { supabase } from "@/lib/supabase"
 import { isSupabaseConfigured } from "@/lib/supabase"
 import { getMockInvoices } from "@/data/mock-invoices"
+import { withAuth } from '@/lib/route-protection'
 
-export async function GET() {
+async function getInvoicesHandler(request: Request) {
   if (!isSupabaseConfigured) {
     return NextResponse.json(getMockInvoices())
   }
@@ -21,4 +22,7 @@ export async function GET() {
     console.error("Error fetching invoices:", error)
     return NextResponse.json(getMockInvoices())
   }
-} 
+}
+
+// Export the protected handler
+export const GET = withAuth(getInvoicesHandler) 

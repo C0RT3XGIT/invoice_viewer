@@ -5,7 +5,7 @@ import { InvoicesList } from "@/components/invoices-list"
 import { getAllInvoices } from "@/services/invoice-service"
 import { LoadingAnimation } from "@/components/loading-animation"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, File } from "lucide-react"
+import { AlertCircle, File, TestTube } from "lucide-react"
 import type { Invoice } from "@/types/invoice"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -59,12 +59,20 @@ export default function InvoicesPage() {
     <main className="container mx-auto py-8 px-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Invoice Processor</h1>
-        <Link href="/">
-          <Button variant="outline">
-            <File className="h-4 w-4 mr-2" />
-            Process Invoice
-          </Button>
-        </Link>
+        <div className="flex gap-2">
+          <Link href="/test">
+            <Button variant="outline" size="sm">
+              <TestTube className="h-4 w-4 mr-2" />
+              Test Auth
+            </Button>
+          </Link>
+          <Link href="/">
+            <Button variant="outline">
+              <File className="h-4 w-4 mr-2" />
+              Process Invoice
+            </Button>
+          </Link>
+        </div>
       </div>
       <InvoicesList invoices={invoices} />
     </main>

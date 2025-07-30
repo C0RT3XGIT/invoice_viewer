@@ -1,11 +1,5 @@
-import axios from 'axios'
+import { apiClient } from '@/lib/api-client'
 import type { Invoice } from "@/types/invoice"
-
-const api = axios.create({
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
 
 export type InvoiceResponse = {
   items: Array<{
@@ -28,25 +22,26 @@ export type InvoiceResponse = {
     corrected: number
     reason: string
   }>
+  busunessContext: string
 }
 
 export async function processInvoiceImage(file: File): Promise<InvoiceResponse> {
   const formData = new FormData()
   formData.append("data", file)
 
-  const response = await api.post('/api/process-invoice', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
+  // Use the authenticated API client for FormData
+  const response = await apiClient.post('/process-invoice', formData, {
+    headers: {} // Don't set Content-Type for FormData
   })
 
-  return response.data
+  return response
 }
 
 export async function getAllInvoices(): Promise<Invoice[]> {
   try {
-    const response = await api.get('/api/invoices')
-    return response.data
+    // Use the authenticated API client
+    const response = await apiClient.get('/invoices')
+    return response
   } catch (error) {
     console.error("Error in getAllInvoices:", error)
     throw error
@@ -55,8 +50,9 @@ export async function getAllInvoices(): Promise<Invoice[]> {
 
 export async function getInvoiceById(id: string): Promise<Invoice | null> {
   try {
-    const response = await api.get(`/api/invoices/${id}`)
-    return response.data
+    // Use the authenticated API client
+    const response = await apiClient.get(`/invoices/${id}`)
+    return response
   } catch (error) {
     console.error("Error in getInvoiceById:", error)
     return null

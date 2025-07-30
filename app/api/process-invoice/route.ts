@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
+import { withAuth } from '@/lib/route-protection'
 
-export async function POST(request: Request) {
+async function processInvoiceHandler(request: Request) {
   try {
     const formData = await request.formData()
     const file = formData.get('data')
@@ -38,4 +39,7 @@ export async function POST(request: Request) {
       { status: 500 }
     )
   }
-} 
+}
+
+// Export the protected handler
+export const POST = withAuth(processInvoiceHandler) 

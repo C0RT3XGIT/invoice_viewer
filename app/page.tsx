@@ -8,7 +8,7 @@ import { LoadingAnimation } from "@/components/loading-animation"
 import { processInvoiceImage, type InvoiceResponse } from "@/services/invoice-service"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { AlertCircle, RefreshCw, List } from "lucide-react"
+import { AlertCircle, RefreshCw, List, TestTube } from "lucide-react"
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
@@ -44,12 +44,20 @@ export default function Home() {
     <main className="container mx-auto py-8 px-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Invoice Processor</h1>
-        <Link href="/invoices">
-          <Button variant="outline">
-            <List className="h-4 w-4 mr-2" />
-            View All Invoices
-          </Button>
-        </Link>
+        <div className="flex gap-2">
+          <Link href="/test">
+            <Button variant="outline" size="sm">
+              <TestTube className="h-4 w-4 mr-2" />
+              Test Auth
+            </Button>
+          </Link>
+          <Link href="/invoices">
+            <Button variant="outline">
+              <List className="h-4 w-4 mr-2" />
+              View All Invoices
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {isLoading ? (
